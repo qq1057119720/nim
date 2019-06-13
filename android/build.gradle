@@ -1,0 +1,82 @@
+group 'com.cgm.nim'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.3.2'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 28
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "arm64-v8a","armeabi", "armeabi-v7a", "x86", "x86_64"
+        }
+    }
+      sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res', 'res-ptr2']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+//    lintOptions {
+//        disable 'InvalidPackage'
+//    }
+
+    packagingOptions{
+        doNotStrip '*/mips/*.so'
+        doNotStrip '*/mips64/*.so'
+    }
+
+}
+
+dependencies {
+    //    implementation('com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.2@aar') {
+    //        transitive = true
+    //    }
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+//    implementation('me.everything:overscroll-decor-android:1.0.4'){
+//        exclude group: 'com.android.support'
+//    }
+    implementation 'me.everything:overscroll-decor-android:1.0.4'
+    implementation "me.leolin:ShortcutBadger:1.1.21@aar"
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    implementation 'jp.wasabeef:glide-transformations:3.3.0'
+    implementation "com.github.chrisbanes.photoview:library:1.2.4"
+    //compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1' // if you want to use the Glide GPU Filters
+    implementation files('libs/nim-avchat-6.5.0.jar')
+    implementation files('libs/nim-basesdk-6.5.0.jar')
+    implementation files('libs/nim-chatroom-6.5.0.jar')
+    implementation files('libs/nim-lucene-6.5.0.jar')
+    implementation files('libs/fastjson-1.1.34.android.jar')
+    implementation files('libs/java-json.jar')
+    implementation files('libs/nrtc-sdk.jar')
+}
