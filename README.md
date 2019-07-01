@@ -75,6 +75,20 @@ import 'package:nim/nim.dart';
 获取最近会话列表
 
 ```
-  Nim nim=new Nim();
-  nim.queryRecentContacts;
+     Nim nim=new Nim();
+    nim.queryRecentContacts().then((map){
+      println(map);
+      if(map["code"]==200){
+        List<dynamic>  chatlist=jsonDecode(map["msg"]);
+        print(chatlist);
+      final List<ChatItemState> chatItemList=new List();
+
+      for(int i=0;i<chatlist.length;i++){
+        chatItemList.add(ChatItemState(chatData: chatlist[i]));
+      }
+        ctx.dispatch(ConversationListActionCreator.initAdapter(chatItemList));
+      }else{
+        ToastTools.showToast("暂无聊天记录");
+      }
+    });
 ```
