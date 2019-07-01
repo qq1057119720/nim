@@ -32,4 +32,11 @@ class Nim {
     };
     return await _channel.invokeMethod('loginOut', params);
   }
+  ///获取会话列表
+  Future<Map> queryRecentContacts() async {
+    Map params = <String, dynamic>{
+    };
+    return await _channel.invokeMethod('queryRecentContacts', params);
+  }
+
 }
