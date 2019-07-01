@@ -71,3 +71,10 @@ import 'package:nim/nim.dart';
   Nim nim=new Nim();
   nim.startChat("to accid");//对方的accid
 ```
+
+获取最近会话列表
+
+```
+  Nim nim=new Nim();
+  nim.queryRecentContacts;
+```
