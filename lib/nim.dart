@@ -17,7 +17,7 @@ class Nim {
     return _instance;
   }
 
-  Nim._internal() {}
+  Nim._internal() ;
 
   static const MethodChannel _channel =
   const MethodChannel('nim');
