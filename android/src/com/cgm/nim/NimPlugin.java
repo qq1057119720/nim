@@ -90,7 +90,9 @@ public class NimPlugin implements MethodCallHandler {
         } else if (call.method.equals("queryRecentContacts")) {
             pendingResult=result;
             queryRecentContacts();
-        } else {
+        }   else if (call.method.equals("keepRecent")) {
+            pendingResult=result;
+        }else {
             result.notImplemented();
         }
     }

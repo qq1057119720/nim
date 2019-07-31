@@ -4,8 +4,23 @@ import 'package:flutter/services.dart';
 
 class Nim {
 
+  static Nim _instance;
+
+  static Nim get instance => _getInstance();
+
+  factory Nim() => _getInstance();
+
+  static Nim _getInstance() {
+    if (_instance == null) {
+      _instance = Nim._internal();
+    }
+    return _instance;
+  }
+
+  Nim._internal() {}
+
   static const MethodChannel _channel =
-      const MethodChannel('nim');
+  const MethodChannel('nim');
 
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
@@ -38,5 +53,13 @@ class Nim {
     };
     return await _channel.invokeMethod('queryRecentContacts', params);
   }
+  ///实时更新会话列表数据
+  Future<Map> keepRecent() async {
+    Map params = <String, dynamic>{
+    };
+    return await _channel.invokeMethod('keepRecent', params);
+  }
+
+///获取会话未读数
 
 }
