@@ -96,6 +96,7 @@ import 'package:nim/nim.dart';
         ToastTools.showToast("暂无聊天记录");
       }
     });
+    //更新数据
     void _refreshData(Map map,Context<ConversationListState> ctx){
   _keepRecent(ctx);
   if(map["code"]==200){
@@ -110,6 +111,7 @@ import 'package:nim/nim.dart';
     ToastTools.showToast("暂无聊天记录");
   }
 }
+//保持监听会话的更新
 void _keepRecent(Context<ConversationListState> ctx){
   Nim.instance.keepRecent().then((map){
     println(map);
