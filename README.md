@@ -77,6 +77,11 @@ import 'package:nim/nim.dart';
 ```
      Nim nim=new Nim();
     nim.queryRecentContacts().then((map){
+    //在会话数据返回之后，调用keepRecent 开实时的获取数据
+      Nim.instance.keepRecent().then((map){
+    println(map);
+    _refreshData(map,ctx);
+  });
       println(map);
       if(map["code"]==200){
         List<dynamic>  chatlist=jsonDecode(map["msg"]);
@@ -91,4 +96,26 @@ import 'package:nim/nim.dart';
         ToastTools.showToast("暂无聊天记录");
       }
     });
+    void _refreshData(Map map,Context<ConversationListState> ctx){
+  _keepRecent(ctx);
+  if(map["code"]==200){
+    List<dynamic>  chatlist=jsonDecode(map["msg"]);
+    print(chatlist);
+    final List<ChatItemState> chatItemList=new List();
+    for(int i=0;i<chatlist.length;i++){
+      chatItemList.add(ChatItemState(chatData: chatlist[i]));
+    }
+    ctx.dispatch(ConversationListActionCreator.initAdapter(chatItemList));
+  }else{
+    ToastTools.showToast("暂无聊天记录");
+  }
+}
+void _keepRecent(Context<ConversationListState> ctx){
+  Nim.instance.keepRecent().then((map){
+    println(map);
+    _refreshData(map,ctx);
+  });
+}
+
 ```
+
