@@ -19,14 +19,14 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="d5bcda57" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_5X_API_22" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/nim.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="19" column="58" selection-start-line="19" selection-start-column="58" selection-end-line="19" selection-end-column="58" />
+            <state relative-caret-position="765">
+              <caret line="53" column="59" selection-start-line="53" selection-start-column="40" selection-end-line="53" selection-end-column="59" />
             </state>
           </provider>
         </entry>
@@ -34,8 +34,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/android/src/com/cgm/nim/NimPlugin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="573">
-              <caret line="205" selection-start-line="205" selection-end-line="205" />
+            <state relative-caret-position="434">
+              <caret line="179" column="88" selection-start-line="179" selection-start-column="88" selection-end-line="179" selection-end-column="89" />
             </state>
           </provider>
         </entry>
@@ -76,25 +76,18 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/lib/nim.dart" />
         <option value="$PROJECT_DIR$/android/src/com/cgm/nim/NimPlugin.java" />
+        <option value="$PROJECT_DIR$/lib/nim.dart" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="1440" />
-    <option name="width" value="1920" />
-    <option name="height" value="1080" />
-  </component>
+  <component name="ProjectId" id="1WYjuS1N80eATFgrMr5z1bys11T" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -129,6 +122,9 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -182,14 +178,27 @@
       <option name="project" value="LOCAL" />
       <updated>1561990650585</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="解决Android会话列表实时更新&#10;2019年07月31日15:27:13">
+      <created>1564558040955</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1564558040955</updated>
+    </task>
+    <task id="LOCAL-00005" summary="解决Android会话列表实时更新&#10;2019年07月31日15:27:13">
+      <created>1564558099014</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1564558099014</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1440" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="true" />
+    <frame x="320" y="23" width="1920" height="830" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.185836" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18550107" />
       <window_info id="Captures" order="1" side_tool="true" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
@@ -198,7 +207,7 @@
       <window_info id="Resources Explorer" order="6" />
       <window_info id="Capture Tool" order="7" />
       <window_info id="Favorites" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Dart Analysis" order="0" visible="true" weight="0.27029702" />
+      <window_info active="true" anchor="bottom" id="Dart Analysis" order="0" visible="true" weight="0.26902175" />
       <window_info anchor="bottom" id="Run" order="1" />
       <window_info anchor="bottom" id="TODO" order="2" />
       <window_info anchor="bottom" id="Android Profiler" order="3" show_stripe_button="false" />
@@ -220,7 +229,8 @@
     <MESSAGE value="网易云IM Flutter 插件" />
     <MESSAGE value="添加使用说明" />
     <MESSAGE value="添加Android端获取会话列表&#10;2019年07月01日22:17:22" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加Android端获取会话列表&#10;2019年07月01日22:17:22" />
+    <MESSAGE value="解决Android会话列表实时更新&#10;2019年07月31日15:27:13" />
+    <option name="LAST_COMMIT_MESSAGE" value="解决Android会话列表实时更新&#10;2019年07月31日15:27:13" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/README.md">
@@ -232,8 +242,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/nim.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="19" column="58" selection-start-line="19" selection-start-column="58" selection-end-line="19" selection-end-column="58" />
+        <state relative-caret-position="765">
+          <caret line="53" column="59" selection-start-line="53" selection-start-column="40" selection-end-line="53" selection-end-column="59" />
         </state>
       </provider>
     </entry>
@@ -259,8 +269,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/android/src/com/cgm/nim/NimPlugin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="573">
-          <caret line="205" selection-start-line="205" selection-end-line="205" />
+        <state relative-caret-position="434">
+          <caret line="179" column="88" selection-start-line="179" selection-start-column="88" selection-end-line="179" selection-end-column="89" />
         </state>
       </provider>
     </entry>
