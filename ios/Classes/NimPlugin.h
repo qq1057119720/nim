@@ -1,4 +1,6 @@
 #import <Flutter/Flutter.h>
-
-@interface NimPlugin : NSObject<FlutterPlugin>
+#import "NIMKit.h"
+#import "NIMKitUtil.h"
+#import "NIMKitInfoFetchOption.h"
+@interface NimPlugin : NSObject<FlutterPlugin,NIMConversationManagerDelegate>
 @end

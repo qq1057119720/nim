@@ -1,11 +1,9 @@
 #import "NimPlugin.h"
-#import "NIMKit.h"
-#import "NIMKitUtil.h"
-#import "NIMKitInfoFetchOption.h"
+
 @implementation NimPlugin
 FlutterResult flutterRsult;
+FlutterResult keepRsult;
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-
   FlutterMethodChannel* channel = [FlutterMethodChannel
       methodChannelWithName:@"nim_plugin"
             binaryMessenger:[registrar messenger]];
@@ -22,17 +20,21 @@ FlutterResult flutterRsult;
       [self initIMLogin:accDic[@"accid"] token:accDic[@"token"]];
 
   }else if ([@"startChat" isEqualToString:call.method]) {//启动单聊页面
+      flutterRsult=result;
       NSMutableDictionary * accDic=call.arguments;
       NSLog(@"%@",accDic);
-      [self startChat:accDic[@"accid"]];
-  }
-  else if ([@"queryRecentContacts" isEqualToString:call.method]) {//获得会话列表
+      [self startChat:accDic];
+  }else if ([@"startTeam" isEqualToString:call.method]) {//启动单聊页面
+      flutterRsult=result;
+      NSMutableDictionary * accDic=call.arguments;
+      NSLog(@"%@",accDic);
+      [self startTeam:accDic];
+  }else if ([@"queryRecentContacts" isEqualToString:call.method]) {//获得会话列表
       flutterRsult=result;
       NSMutableDictionary * accDic=call.arguments;
       NSLog(@"查询用户会话");
-     NSMutableArray * chatList=  [self getAllRecentSessions];
-       NSLog(@"------%@",chatList);
-
+      NSMutableArray * chatList=  [self getAllRecentSessions];
+      NSLog(@"------%@",chatList);
       NSMutableDictionary * resultDic=[NSMutableDictionary dictionary];
       if(chatList){
           [resultDic setObject:@"200" forKey:@"code"];
@@ -41,7 +43,21 @@ FlutterResult flutterRsult;
           [resultDic setObject:@"0" forKey:@"code"];
       }
       result(resultDic);
-  }else {
+  }else if ([@"delete_contact" isEqualToString:call.method]) {//删除会话
+      flutterRsult=result;
+      NSMutableDictionary * accDic=call.arguments;
+//      NSLog(@"%@",accDic);
+//      [self startChat:accDic];
+
+      [self deleteServerSession:accDic[@"account"]];
+
+  }else if ([@"keepRecent" isEqualToString:call.method]) {//保持会话
+     keepRsult=result;
+    [[NIMSDK sharedSDK].conversationManager addDelegate:self];
+
+    }
+
+  else {
     result(FlutterMethodNotImplemented);
   }
 }
@@ -63,10 +79,35 @@ FlutterResult flutterRsult;
     /**
     启动单聊页面
      */
-    -(void)startChat:(NSString*)accid{
-        NIMSession *session = [NIMSession session:accid type:NIMSessionTypeP2P];
+    -(void)startChat:(NSMutableDictionary*)accDic{
+        NIMSession *session = [NIMSession session:accDic[@"accid"] type:NIMSessionTypeP2P];
         NIMSessionViewController *vc = [[NIMSessionViewController alloc] initWithSession:session];
+        vc.modalPresentationStyle = 0;
+        vc.userDic=accDic;
+        vc.block = ^{   // 让block指向一个实体代码块，等待被调用时候执行
+                    NSLog(@"我是block体，我替别人doSomething");
+             NSMutableDictionary * resultDic=[NSMutableDictionary dictionary];
+             [resultDic setObject:@"201" forKey:@"code"];
+             flutterRsult(resultDic);
+            NSLog(@"fann hui flutter ");
+         };
+        [[UIApplication sharedApplication].delegate.window.rootViewController  presentViewController:vc animated:YES completion:nil];
+//          [_viewController presentViewController:_qrcodeViewController animated:NO completion:nil];
 
+    }
+
+   -(void)startTeam:(NSMutableDictionary*)accDic{
+        NIMSession *session = [NIMSession session:accDic[@"tic"] type:NIMSessionTypeTeam];
+        NIMSessionViewController *vc = [[NIMSessionViewController alloc] initWithSession:session];
+        vc.modalPresentationStyle = 0;
+        vc.userDic=accDic;
+        vc.block = ^{   // 让block指向一个实体代码块，等待被调用时候执行
+                    NSLog(@"我是block体，我替别人doSomething");
+             NSMutableDictionary * resultDic=[NSMutableDictionary dictionary];
+             [resultDic setObject:@"201" forKey:@"code"];
+             flutterRsult(resultDic);
+            NSLog(@"fann hui flutter ");
+         };
         [[UIApplication sharedApplication].delegate.window.rootViewController  presentViewController:vc animated:YES completion:nil];
 //          [_viewController presentViewController:_qrcodeViewController animated:NO completion:nil];
 
@@ -79,8 +120,6 @@ FlutterResult flutterRsult;
     NSLog(@"会话条数%d:",recentSessions.count);
     NSLog(@"%@",recentSessions);
        __weak typeof(self) wself = self;
-
-
 
     NSMutableArray * chatList=[NSMutableArray array];
 
@@ -109,6 +148,16 @@ FlutterResult flutterRsult;
         NIMRecentSession * recent=recentSessions[i];
         NSMutableDictionary * chatDic=[NSMutableDictionary dictionary];
         [chatDic setObject:recent.lastMessage.session.sessionId forKey:@"contactId"];
+
+        switch (recent.session.sessionType) {
+            case NIMSessionTypeP2P:
+                  [chatDic setObject:@"P2P" forKey:@"sessionType"];
+                break;
+
+            case NIMSessionTypeTeam:
+                 [chatDic setObject:@"Team" forKey:@"sessionType"];
+                break;
+        }
 
         [chatDic setObject:[self messageContent:recent.lastMessage] forKey:@"content"];
         //    cell.nameLabel.text = [self nameForRecentSession:recent];
@@ -228,6 +277,46 @@ FlutterResult flutterRsult;
 - (NSAttributedString *)contentForRecentSession:(NIMRecentSession *)recent{
     NSString *content = [self messageContent:recent.lastMessage];
     return [[NSAttributedString alloc] initWithString:content ?: @""];
+}
+
+- (void)deleteServerSession:(NSString *)account{
+
+     NSArray<NIMRecentSession *>  *recentSessions = [NIMSDK sharedSDK].conversationManager.allRecentSessions;
+
+
+       for(int i=0;i<recentSessions.count;i++){
+
+        NIMRecentSession * recent=recentSessions[i];
+           if ([account isEqualToString:recent.session.sessionId]) {
+
+               [[NIMSDK sharedSDK].conversationManager deleteRecentSession:recent];
+               break;
+           }
+       }
+    NSMutableDictionary * resultDic=[NSMutableDictionary dictionary];
+    [resultDic setObject:@"200" forKey:@"code"];
+    flutterRsult(resultDic);
+}
+
+- (void)didUpdateRecentSession:(NIMRecentSession *)recentSession
+              totalUnreadCount:(NSInteger)totalUnreadCount{
+        NSLog(@"我在刷新哦");
+
+         NSLog(@"查询用户会话");
+         NSMutableArray * chatList=  [self getAllRecentSessions];
+         NSLog(@"------%@",chatList);
+         NSMutableDictionary * resultDic=[NSMutableDictionary dictionary];
+         if(chatList){
+             [resultDic setObject:@"200" forKey:@"code"];
+             [resultDic setObject:[self arrayToJSONString:chatList] forKey:@"msg"];
+         }else{
+             [resultDic setObject:@"0" forKey:@"code"];
+         }
+    if (keepRsult) {
+        keepRsult(resultDic);
+        keepRsult=nil;
+    }
+
 }
 
 @end
